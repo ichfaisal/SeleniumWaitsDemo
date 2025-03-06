@@ -1,0 +1,19 @@
+# Ignore target folder (compiled files)
+target/
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+
+# Ignore class and log files
+*.class
+*.log
+
+# Ignore JAR/WAR/EAR files
+*.jar
+*.war
+*.ear
+
+# Ignore temporary files
+*.swp
+.DS_Store
