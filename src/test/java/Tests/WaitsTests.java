@@ -1,46 +1,40 @@
 package Tests;
 
 import java.time.Duration;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class WaitsTests {
-	
+/**
+ * WaitsTests class - Contains Selenium test cases related to waiting
+ * conditions.
+ */
+public class WaitsTests extends BaseTest {
+
+	/**
+	 * Test: Verify that an element becomes visible after clicking a button.
+	 */
 	@Test
-	public void TestWaitToElementVisisble() {
-		WebDriver wd = new ChromeDriver();
+	public void TestWaitToElementVisible() {
+	    // Click on the "Wait Conditions" section to navigate to the test page
+	    wd.findElement(By.xpath("//div[@class='card-header' and normalize-space(.)='Wait Conditions']//following-sibling::div/a"))
+	      .click();
 
-		wd.get("https://play1.automationcamp.ir/");
-		wd.manage().window().maximize();
-		wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+	    // Click the button that triggers the spinner (loader)
+	    wd.findElement(By.id("invisibility_trigger")).click();
 
-		wd.findElement(By.xpath(
-				"//div[@class='card-header' and normalize-space(.)='Wait Conditions']//following-sibling::div/a"))
-				.click();
+	    // Explicit Wait: Wait until the element with ID "spinner_gone" becomes visible
+	    WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(15));
+	    wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("spinner_gone")));
 
-		wd.findElement(By.id("invisibility_trigger")).click();
-		WebDriverWait wait = new WebDriverWait(wd, Duration.ofSeconds(15));
-		wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("spinner_gone")));
+	    // Retrieve the text from the element that appears after the spinner disappears
+	    String txt = wd.findElement(By.id("spinner_gone")).getText();
 
-		String txt = wd.findElement(By.id("spinner_gone")).getText();
-		Assert.assertEquals(txt, "Thank God that spinner is gone!");
-
-		try {
-			Thread.sleep(Duration.ofSeconds(4));
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		wd.quit();
-
+	    // Verify that the expected text is displayed
+	    Assert.assertEquals(txt, "Thank God that spinner is gone!");
 	}
 
-	public static void main(String[] args) {
-	}
+
 }
