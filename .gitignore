@@ -1,5 +1,6 @@
 # Ignore target folder (compiled files)
 target/
+test-output/
 
 # Ignore IDE-specific files
 .idea/
